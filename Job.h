@@ -50,20 +50,29 @@ public:
 };
 
 class Job {
+private:
+	
 	int _start,_duration, _deadline, _profit;
 	std::string _name;
+	
 public:
-	Job(int dur, int dead, int p, std::string n):_name(n),
-		_duration(dur),_deadline(dead), _profit(p){}
+	
+	Job(int dur, int dead, int p, std::string n):_name(n),_duration(dur),_deadline(dead), _profit(p){}
 
 	int profit() const {
 		return _profit;
 	}
+
 	int deadline () const {
 		return _deadline;
 	}
+
 	std::string name() const {
 		return _name;
+	}
+
+	int duration() const {
+		return _duration;
 	}
 
 	bool overlap(const Job& rhs) {
@@ -74,10 +83,20 @@ public:
 		//otherwise
 		return false;
 	}
-	int duration() const {
-		return _duration;
-	}
 	
+	void setStart(int start) {
+		_start = start;
+	}
+
+	int start() const {
+		return _start;
+	}
+
+	bool operator< (const Job& rhs) {
+		//used for greedy priority queue constructon
+		return _profit < rhs.profit();
+	}
+
 };
 
 Job read_job(std::string js) {
