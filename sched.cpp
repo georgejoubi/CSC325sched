@@ -86,7 +86,21 @@ Matrix<int> dp_solve(std::vector<Job>& jobs) {
 
 std::vector<string> dp_solution(Matrix<int> T, std::vector<Job>& jobs) {
 
+	std::vector<string> solution;
+	
+	int i = T.rows();
+	int j = T.cols();
 
+	while (i != 0) {
+		if (T[i][j] == T[i - 1][j]) {
+			i--;
+		} else {
+			j = std::min(j, jobs[i - 1].deadline()) - jobs[i - 1].duration();
+			solution.insert(solution.begin(), jobs[--i].name());
+		}
+	}
+
+	return solution;
 
 }
 
